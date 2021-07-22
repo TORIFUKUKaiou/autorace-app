@@ -9,9 +9,7 @@ export default new Vuex.Store({
     date: new Date(),
     place: null,
     places: [],
-    race: "8R",
-    races: ["1R", "2R", "3R", "4R", "5R", "6R", "7R", "8R", "9R", "10R", "11R", "12R"],
-    names: {kawaguchi: '川口', isesaki: '伊勢崎', hamamatsu: '浜松', iizuka: '飯塚', sanyou: '鉄壁山陽'},
+    race: 7,
   },
   mutations: {
     setEvents(state, payload) {
@@ -20,7 +18,7 @@ export default new Vuex.Store({
         const start = new Date(event.start)
         const end = new Date(event.end)
         return start <= state.date && state.date <= end
-      }).map((event) => { return state.names[event.place] })
+      }).map((event) => { return event.place })
       if(!state.places.some((place) => { return place === state.place })) {
         state.place = state.places[0]
       }
@@ -32,7 +30,7 @@ export default new Vuex.Store({
         const end = new Date(event.end)
         const date = new Date(payload)
         return start <= date && date <= end
-      }).map((event) => { return state.names[event.place] })
+      }).map((event) => { return event.place })
       if(!state.places.some((place) => { return place === state.place })) {
         state.place = state.places[0]
       }

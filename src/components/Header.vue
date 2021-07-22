@@ -13,7 +13,7 @@
         outlined
         tile
       >
-        <Datepicker :language="ja" format="yyyy-MM-dd" :value="this.$store.state.date" @selected="updateDate" />
+        <Datepicker :language="ja" format="yyyy-MM-dd" :value="date" @selected="updateDate" />
       </v-card>
       <v-card
         key="5"
@@ -22,8 +22,8 @@
         tile
       >
         <v-select
-          :items="this.$store.state.places"
-          :value="this.$store.state.place"
+          :items="places"
+          :value="place"
           @change="updatePlace"
           label="開催場所"
           outlined
@@ -38,8 +38,8 @@
         tile
       >
         <v-select
-          :items="this.$store.state.races"
-          :value="this.$store.state.race"
+          :items="races"
+          :value="race"
           @change="updateRace"
           label="レース"
           outlined
@@ -87,12 +87,13 @@
         this.$store.commit("setPlace", place)
       },
       updateRace(race) {
-        this.$store.commit("setRace", race)
+        const index = this.races.findIndex(r => r === race)
+        this.$store.commit("setRace", index)
       },
       play() {
-        const places = {'川口': 'kawaguchi', '伊勢崎': 'isezaki', '浜松': 'hama', '飯塚': 'iizuka', '鉄壁山陽': 'sanyou'}
+        const places = {'kawaguchi': 'kawaguchi', 'isesaki': 'isezaki', 'hamamatsu': 'hama', 'iizuka': 'iizuka', 'sanyou': 'sanyou'}
 
-        const race = this.$store.state.races.findIndex(r => { return r === this.$store.state.race }) + 1
+        const race = this.$store.state.race + 1
         const raceNo = ( '00' + race ).slice( -2 )
         const place = places[this.$store.state.place]
         const date = new Date(this.$store.state.date)
@@ -104,6 +105,26 @@
         console.log(url)
 
         this.$router.push({ name: 'Player', params: {url}})
+      }
+    },
+    computed: {
+      date: function() {
+        return this.$store.state.date
+      },
+      places: function() {
+        return this.$store.state.places.map(p => this.names[p])
+      },
+      place: function() {
+        return this.names[this.$store.state.place]
+      },
+      races: function() {
+        return ["1R", "2R", "3R", "4R", "5R", "6R", "7R", "8R", "9R", "10R", "11R", "12R"]
+      },
+      race: function() {
+        return this.races[this.$store.state.race]
+      },
+      names: function() {
+        return {kawaguchi: '川口', isesaki: '伊勢崎', hamamatsu: '浜松', iizuka: '飯塚', sanyou: '鉄壁山陽'}
       }
     }
   }
