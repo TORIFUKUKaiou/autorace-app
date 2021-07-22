@@ -14,14 +14,6 @@ export default new Vuex.Store({
   mutations: {
     setEvents(state, payload) {
       state.events = payload
-      state.places = payload.filter((event) => {
-        const start = new Date(event.start)
-        const end = new Date(event.end)
-        return start <= state.date && state.date <= end
-      }).map((event) => { return event.place })
-      if(!state.places.some((place) => { return place === state.place })) {
-        state.place = state.places[0]
-      }
     },
     setDate(state, payload) {
       state.date = payload
@@ -40,7 +32,22 @@ export default new Vuex.Store({
     },
     setRace(state, payload) {
       state.race = payload
-    }
+    },
+    setPlaces(state, payload) {
+      const events = payload.events
+      const date = new Date(payload.date)
+
+      state.places = events.filter((event) => {
+        const start = new Date(event.start)
+        const end = new Date(event.end)
+        return start <= date && date <= end
+      }).map((event) => { return event.place })
+    },
+    maybeChangePlace(state) {
+      if(!state.places.some((place) => { return place === state.place })) {
+        state.place = state.places[0]
+      }
+    },
   },
   actions: {
     async fetchEvents(store) {
@@ -52,6 +59,8 @@ export default new Vuex.Store({
         return res.json();
       });
       store.commit("setEvents", response);
+      store.commit("setPlaces", { events: response, date: store.state.date });
+      store.commit("maybeChangePlace");
     }
   },
   modules: {

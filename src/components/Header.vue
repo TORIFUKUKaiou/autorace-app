@@ -82,6 +82,8 @@
     methods: {
       updateDate(date) {
         this.$store.commit("setDate", date)
+        this.$store.commit("setPlaces", { events: this.$store.state.events, date: date })
+        this.$store.commit("maybeChangePlace")
       },
       updatePlace(place) {
         this.$store.commit("setPlace", place)

@@ -161,7 +161,10 @@
       },
       setToday () {
         this.focus = ''
-        this.$store.commit("setDate", new Date())
+        const date = new Date()
+        this.$store.commit("setDate", date)
+        this.$store.commit("setPlaces", { events: this.$store.state.events, date: date })
+        this.$store.commit("maybeChangePlace")
       },
       prev () {
         this.$refs.calendar.prev()
@@ -219,6 +222,8 @@
       },
       setDate ({ date }) {
         this.$store.commit("setDate", date)
+        this.$store.commit("setPlaces", { events: this.$store.state.events, date: date })
+        this.$store.commit("maybeChangePlace")
       },
     },
   }
