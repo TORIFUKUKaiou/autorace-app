@@ -83,7 +83,7 @@
           :type="type"
           @click:event="showEvent"
           @click:more="viewDay"
-          @click:date="viewDay"
+          @click:date="setDate"
           @change="updateRange"
         ></v-calendar>
         <v-menu
@@ -161,6 +161,7 @@
       },
       setToday () {
         this.focus = ''
+        this.$store.commit("setDate", new Date())
       },
       prev () {
         this.$refs.calendar.prev()
@@ -194,7 +195,8 @@
 
         let min = new Date(`${start.date}T00:00:00`)
         min.setDate(min.getDate() - min.getDay())
-        const max = new Date(`${end.date}T23:59:59`)
+        let max = new Date(`${end.date}T23:59:59`)
+        max.setDate(max.getDate() + 6 - max.getDay())
 
         const filtered = this.$store.state.events.filter((event) => {
           start = new Date(event.start)
@@ -214,6 +216,9 @@
         events.push(...filtered)
 
         this.events = events
+      },
+      setDate ({ date }) {
+        this.$store.commit("setDate", date)
       },
     },
   }
