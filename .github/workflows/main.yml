@@ -37,6 +37,6 @@ jobs:
       - name: Deploy with gh-pages
         run: |
          git remote set-url origin https://git:${GITHUB_TOKEN}@github.com:TORIFUKUKaiou/autorace-app.git
-         yarn ./node_modules/gh-pages/bin/gh-pages.js -d build
+         node ./node_modules/gh-pages/bin/gh-pages.js -d build
         env:
          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
