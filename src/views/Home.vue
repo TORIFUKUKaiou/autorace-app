@@ -106,6 +106,8 @@
 
         const url = `https://sp-auto.digi-c.com/autorace/_definst_/${place}/${year}/${place}_${year}${month}${dayOfMonth}_${raceNo}/playlist.m3u8`
         console.log(url)
+
+        this.$router.push({ name: 'Player', params: {url}})
       }
     }
   }
