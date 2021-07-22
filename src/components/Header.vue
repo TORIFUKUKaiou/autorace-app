@@ -86,7 +86,8 @@
         this.$store.commit("maybeChangePlace")
       },
       updatePlace(place) {
-        this.$store.commit("setPlace", place)
+        const names = {'川口': 'kawaguchi', '伊勢崎': 'isesaki', '浜松': 'hamamatsu', '飯塚': 'iizuka', '鉄壁山陽': 'sanyou'}
+        this.$store.commit("setPlace", names[place])
       },
       updateRace(race) {
         const index = this.races.findIndex(r => r === race)
