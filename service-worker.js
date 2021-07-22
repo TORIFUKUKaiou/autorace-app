@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.bb9839d504c5cfe7b7b6d38f0151477d.js"
+  "/precache-manifest.cf6299af08c19c15f9bfe83f001acda0.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "autorace"});
