@@ -101,18 +101,14 @@
               :color="selectedEvent.color"
               dark
             >
-              <v-btn icon>
-                <v-icon>mdi-pencil</v-icon>
-              </v-btn>
               <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
-              <v-spacer></v-spacer>
-              <v-btn icon>
-                <v-icon>mdi-heart</v-icon>
-              </v-btn>
-              <v-btn icon>
-                <v-icon>mdi-dots-vertical</v-icon>
-              </v-btn>
             </v-toolbar>
+            <v-chip
+              class="ma-2"
+              :color="selectedEvent.color"
+            >
+                {{ selectedEvent.place }}
+            </v-chip>
             <v-card-text>
               <span v-html="selectedEvent.details"></span>
             </v-card-text>
@@ -148,6 +144,7 @@
       selectedOpen: false,
       events: [],
       colors: {kawaguchi: 'blue', isesaki: 'indigo', hamamatsu: 'deep-purple', iizuka: 'cyan', sanyou: 'green'},
+      places: {kawaguchi: '川口', isesaki: '伊勢崎', hamamatsu: '浜松', iizuka: '飯塚', sanyou: '鉄壁山陽'},
       names: ['Meeting', 'Holiday', 'PTO', 'Travel', 'Event', 'Birthday', 'Conference', 'Party'],
     }),
     mounted () {
@@ -209,7 +206,9 @@
             start:  new Date(event.start),
             end: new Date(event.end),
             color: this.colors[event.place],
-            timed: false
+            timed: false,
+            details: event.range,
+            place: this.places[event.place]
           }
         })
         events.push(...filtered)
