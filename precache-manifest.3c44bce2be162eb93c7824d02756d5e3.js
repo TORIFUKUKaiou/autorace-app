@@ -4,7 +4,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/autorace-app/css/chunk-vendors.699ea57e.css"
   },
   {
-    "revision": "432005c045e66c7f533843c0e731d38f",
+    "revision": "33bbda02e1b046af2cf90555f0ca9b98",
     "url": "/autorace-app/index.html"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/autorace-app/js/about.9e7f021b.js"
   },
   {
-    "revision": "6b417a83c5d7d663cf1b",
-    "url": "/autorace-app/js/app.04255d1e.js"
+    "revision": "4f9bcb88e3d1355af3f5",
+    "url": "/autorace-app/js/app.d8929423.js"
   },
   {
     "revision": "4e2b7d2ca82239b8bec1",
