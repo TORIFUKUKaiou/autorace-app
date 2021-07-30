@@ -2,58 +2,25 @@
   <v-row class="fill-height">
     <v-col>
       <v-sheet height="64">
-        <v-toolbar
-          flat
-        >
-          <v-btn
-            outlined
-            class="mr-4"
-            color="grey darken-2"
-            @click="setToday"
-          >
+        <v-toolbar flat>
+          <v-btn outlined class="mr-4" color="grey darken-2" @click="setToday">
             Today
           </v-btn>
-          <v-btn
-            fab
-            text
-            small
-            color="grey darken-2"
-            @click="prev"
-          >
-            <v-icon small>
-              mdi-chevron-left
-            </v-icon>
+          <v-btn fab text small color="grey darken-2" @click="prev">
+            <v-icon small> mdi-chevron-left </v-icon>
           </v-btn>
-          <v-btn
-            fab
-            text
-            small
-            color="grey darken-2"
-            @click="next"
-          >
-            <v-icon small>
-              mdi-chevron-right
-            </v-icon>
+          <v-btn fab text small color="grey darken-2" @click="next">
+            <v-icon small> mdi-chevron-right </v-icon>
           </v-btn>
           <v-toolbar-title v-if="$refs.calendar">
             {{ $refs.calendar.title }}
           </v-toolbar-title>
           <v-spacer></v-spacer>
-          <v-menu
-            bottom
-            right
-          >
+          <v-menu bottom right>
             <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                outlined
-                color="grey darken-2"
-                v-bind="attrs"
-                v-on="on"
-              >
+              <v-btn outlined color="grey darken-2" v-bind="attrs" v-on="on">
                 <span>{{ typeToLabel[type] }}</span>
-                <v-icon right>
-                  mdi-menu-down
-                </v-icon>
+                <v-icon right> mdi-menu-down </v-icon>
               </v-btn>
             </template>
             <v-list>
@@ -92,32 +59,18 @@
           :activator="selectedElement"
           offset-x
         >
-          <v-card
-            color="grey lighten-4"
-            min-width="350px"
-            flat
-          >
-            <v-toolbar
-              :color="selectedEvent.color"
-              dark
-            >
+          <v-card color="grey lighten-4" min-width="350px" flat>
+            <v-toolbar :color="selectedEvent.color" dark>
               <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
             </v-toolbar>
-            <v-chip
-              class="ma-2"
-              :color="selectedEvent.color"
-            >
-                {{ selectedEvent.place }}
+            <v-chip class="ma-2" :color="selectedEvent.color">
+              {{ selectedEvent.place }}
             </v-chip>
             <v-card-text>
               <span v-html="selectedEvent.details"></span>
             </v-card-text>
             <v-card-actions>
-              <v-btn
-                text
-                color="secondary"
-                @click="selectedOpen = false"
-              >
+              <v-btn text color="secondary" @click="selectedOpen = false">
                 Cancel
               </v-btn>
             </v-card-actions>
@@ -129,102 +82,135 @@
 </template>
 
 <script>
-  export default {
-    data: () => ({
-      focus: '',
-      type: 'month',
-      typeToLabel: {
-        month: 'Month',
-        week: 'Week',
-        day: 'Day',
-        '4day': '4 Days',
-      },
-      selectedEvent: {},
-      selectedElement: null,
-      selectedOpen: false,
-      events: [],
-      colors: {kawaguchi: 'blue', isesaki: 'indigo', hamamatsu: 'deep-purple', iizuka: 'cyan', sanyou: 'green'},
-      places: {kawaguchi: '川口', isesaki: '伊勢崎', hamamatsu: '浜松', iizuka: '飯塚', sanyou: '鉄壁山陽'},
-      names: ['Meeting', 'Holiday', 'PTO', 'Travel', 'Event', 'Birthday', 'Conference', 'Party'],
-    }),
-    mounted () {
-      this.$store.dispatch('fetchEvents')
-      this.$refs.calendar.checkChange()
+export default {
+  data: () => ({
+    focus: "",
+    type: "month",
+    typeToLabel: {
+      month: "Month",
+      week: "Week",
+      day: "Day",
+      "4day": "4 Days",
     },
-    methods: {
-      viewDay ({ date }) {
-        this.focus = date
-        this.type = 'day'
-      },
-      getEventColor (event) {
-        return event.color
-      },
-      setToday () {
-        this.focus = ''
-        const date = new Date()
-        this.$store.commit("setDate", date)
-        this.$store.commit("setPlaces", { events: this.$store.state.events, date: date })
-        this.$store.commit("maybeChangePlace")
-      },
-      prev () {
-        this.$refs.calendar.prev()
-      },
-      next () {
-        this.$refs.calendar.next()
-      },
-      showEvent ({ nativeEvent, event }) {
-        const open = () => {
-          this.selectedEvent = event
-          this.selectedElement = nativeEvent.target
-          requestAnimationFrame(() => requestAnimationFrame(() => this.selectedOpen = true))
-        }
+    selectedEvent: {},
+    selectedElement: null,
+    selectedOpen: false,
+    events: [],
+    colors: {
+      kawaguchi: "blue",
+      isesaki: "indigo",
+      hamamatsu: "deep-purple",
+      iizuka: "cyan",
+      sanyou: "green",
+    },
+    places: {
+      kawaguchi: "川口",
+      isesaki: "伊勢崎",
+      hamamatsu: "浜松",
+      iizuka: "飯塚",
+      sanyou: "鉄壁山陽",
+    },
+    names: [
+      "Meeting",
+      "Holiday",
+      "PTO",
+      "Travel",
+      "Event",
+      "Birthday",
+      "Conference",
+      "Party",
+    ],
+  }),
+  mounted() {
+    this.$store.dispatch("fetchEvents");
+    this.$refs.calendar.checkChange();
+  },
+  methods: {
+    viewDay({ date }) {
+      this.focus = date;
+      this.type = "day";
+    },
+    getEventColor(event) {
+      return event.color;
+    },
+    setToday() {
+      this.focus = "";
+      const date = new Date();
+      this.$store.commit("setDate", date);
+      this.$store.commit("setPlaces", {
+        events: this.$store.state.events,
+        date: date,
+      });
+      this.$store.commit("maybeChangePlace");
+    },
+    prev() {
+      this.$refs.calendar.prev();
+    },
+    next() {
+      this.$refs.calendar.next();
+    },
+    showEvent({ nativeEvent, event }) {
+      const open = () => {
+        this.selectedEvent = event;
+        this.selectedElement = nativeEvent.target;
+        requestAnimationFrame(() =>
+          requestAnimationFrame(() => (this.selectedOpen = true))
+        );
+      };
 
-        if (this.selectedOpen) {
-          this.selectedOpen = false
-          requestAnimationFrame(() => requestAnimationFrame(() => open()))
-        } else {
-          open()
-        }
+      if (this.selectedOpen) {
+        this.selectedOpen = false;
+        requestAnimationFrame(() => requestAnimationFrame(() => open()));
+      } else {
+        open();
+      }
 
-        nativeEvent.stopPropagation()
-      },
-      updateRange ({ start, end }) {
-        if (this.$store.state.events === null) {
-          setTimeout(() => { this.updateRange ({ start, end }) }, 500)
-          return
-        }
+      nativeEvent.stopPropagation();
+    },
+    updateRange({ start, end }) {
+      if (this.$store.state.events === null) {
+        setTimeout(() => {
+          this.updateRange({ start, end });
+        }, 500);
+        return;
+      }
 
-        const events = []
+      const events = [];
 
-        let min = new Date(`${start.date}T00:00:00`)
-        min.setDate(min.getDate() - min.getDay())
-        let max = new Date(`${end.date}T23:59:59`)
-        max.setDate(max.getDate() + 6 - max.getDay())
+      let min = new Date(`${start.date}T00:00:00`);
+      min.setDate(min.getDate() - min.getDay());
+      let max = new Date(`${end.date}T23:59:59`);
+      max.setDate(max.getDate() + 6 - max.getDay());
 
-        const filtered = this.$store.state.events.filter((event) => {
-          start = new Date(event.start)
-          end = new Date(event.end)
-          return (min <= start && start <= max) || (start <= min && min <= end )
-        }).map((event) => {
+      const filtered = this.$store.state.events
+        .filter((event) => {
+          start = new Date(event.start);
+          end = new Date(event.end);
+          return (min <= start && start <= max) || (start <= min && min <= end);
+        })
+        .map((event) => {
           return {
             name: event.title,
-            start:  new Date(event.start),
+            start: new Date(event.start),
             end: new Date(event.end),
             color: this.colors[event.place],
             timed: false,
             details: event.range,
-            place: this.places[event.place]
-          }
-        })
-        events.push(...filtered)
+            place: this.places[event.place],
+          };
+        });
+      events.push(...filtered);
 
-        this.events = events
-      },
-      setDate ({ date }) {
-        this.$store.commit("setDate", date)
-        this.$store.commit("setPlaces", { events: this.$store.state.events, date: date })
-        this.$store.commit("maybeChangePlace")
-      },
+      this.events = events;
     },
-  }
+    setDate({ date }) {
+      this.$store.commit("setDate", date);
+      this.$store.commit("setPlaces", {
+        events: this.$store.state.events,
+        date: date,
+      });
+      this.$store.commit("maybeChangePlace");
+    },
+  },
+};
 </script>

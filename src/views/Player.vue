@@ -12,7 +12,7 @@ import Hls from "hls.js";
 import DPlayer from "dplayer";
 export default {
   props: {
-    urls: Array
+    urls: Array,
   },
   data: () => {
     return {
@@ -20,30 +20,30 @@ export default {
       current: 0,
     };
   },
-  mounted: function() {
+  mounted: function () {
     this.play();
   },
   methods: {
     play() {
       this.dp = new DPlayer({
-        container: document.getElementById('dplayer'),
+        container: document.getElementById("dplayer"),
         screenshot: true,
         video: {
-            url: this.urls[this.current],
-            type: 'customHls',
-            customType: {
-              customHls: function (video) {
-                  const hls = new Hls();
-                  hls.loadSource(video.src);
-                  hls.attachMedia(video);
-              },
+          url: this.urls[this.current],
+          type: "customHls",
+          customType: {
+            customHls: function (video) {
+              const hls = new Hls();
+              hls.loadSource(video.src);
+              hls.attachMedia(video);
+            },
           },
         },
       });
-      this.dp.fullScreen.request('browser');
-      this.dp.on('ended', this.nextPlay);
-      this.dp.on('abort', this.ended);
-      this.dp.on('error', this.ended);
+      this.dp.fullScreen.request("browser");
+      this.dp.on("ended", this.nextPlay);
+      this.dp.on("abort", this.ended);
+      this.dp.on("error", this.ended);
 
       this.dp.play();
     },
@@ -56,11 +56,11 @@ export default {
       }
     },
     back() {
-      this.$router.back()
+      this.$router.back();
     },
     ended() {
       this.back();
     },
-  }
-}
+  },
+};
 </script>

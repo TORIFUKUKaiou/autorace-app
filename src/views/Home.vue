@@ -6,15 +6,15 @@
 </template>
 
 <script>
-  import Calendar from '../components/Calendar'
-  import Header from '../components/Header'
+import Calendar from "../components/Calendar";
+import Header from "../components/Header";
 
-  export default {
-    name: 'Home',
+export default {
+  name: "Home",
 
-    components: {
-      Calendar,
-      Header
-    }
-  }
+  components: {
+    Calendar,
+    Header,
+  },
+};
 </script>
