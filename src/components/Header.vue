@@ -38,7 +38,7 @@
         <v-card key="7" class="pa-2" outlined tile>
           <v-row>
             <v-col>
-              <v-switch v-model="switch1" label="Repeat"></v-switch>
+              <v-switch v-model="switch1" label="Auto Play"></v-switch>
             </v-col>
             <v-col>
               <v-btn depressed color="primary" @click="play"> Play </v-btn>
