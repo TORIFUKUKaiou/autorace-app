@@ -6,7 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     events: null,
-    date: new Date(),
+    date: new Date().getHours() < 17 ? new Date().setDate(new Date().getDate() - 1) : new Date(),
     place: null,
     places: [],
     race: 7,
