@@ -51,13 +51,23 @@
         outlined
         tile
       >
-        <v-btn
-          depressed
-          color="primary"
-          @click="play"
-        >
-          Play
-        </v-btn>
+        <v-row>
+          <v-col>
+          <v-switch
+            v-model="switch1"
+            label="Repeat"
+          ></v-switch>
+          </v-col>
+          <v-col>
+          <v-btn
+            depressed
+            color="primary"
+            @click="play"
+          >
+            Play
+          </v-btn>
+          </v-col>
+        </v-row>
       </v-card>
       </div>
     </v-card>
@@ -77,6 +87,7 @@
     data() {
       return {
         ja: ja,
+        switch1: true,
       }
     },
     methods: {
@@ -97,17 +108,33 @@
         const places = {'kawaguchi': 'kawaguchi', 'isesaki': 'isezaki', 'hamamatsu': 'hama', 'iizuka': 'iizuka', 'sanyou': 'sanyou'}
 
         const race = this.$store.state.race + 1
-        const raceNo = ( '00' + race ).slice( -2 )
         const place = places[this.$store.state.place]
-        const date = new Date(this.$store.state.date)
+
+        const urls = []
+        if (this.switch1) {
+          for (let i = race; i <= 12; i++) {
+            const url = this.url(i, place, this.$store.state.date)
+            urls.push(url)
+          }
+        } else {
+          const url = this.url(race, place, this.$store.state.date)
+          urls.push(url)
+        }
+
+        console.log(urls)
+
+        this.$router.push({ name: 'Player', params: {urls}})
+      },
+      url(race, place, d) {
+        const raceNo = ( '00' + race ).slice( -2 )
+        const date = new Date(d)
         const year = date.getFullYear()
         const month = ( '00' + (date.getMonth() + 1) ).slice( -2 )
         const dayOfMonth = ( '00' + date.getDate()).slice( -2 )
 
         const url = `https://sp-auto.digi-c.com/autorace/_definst_/${place}/${year}/${place}_${year}${month}${dayOfMonth}_${raceNo}/playlist.m3u8`
-        console.log(url)
 
-        this.$router.push({ name: 'Player', params: {url}})
+        return url;
       }
     },
     computed: {

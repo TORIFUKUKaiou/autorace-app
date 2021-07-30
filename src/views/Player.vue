@@ -12,19 +12,24 @@ import Hls from "hls.js";
 import DPlayer from "dplayer";
 export default {
   props: {
-    url: String
+    urls: Array
   },
   data: () => {
     return {
       dp: null,
+      current: 0,
     };
   },
   mounted: function() {
-    this.dp = new DPlayer({
+    this.play();
+  },
+  methods: {
+    play() {
+      this.dp = new DPlayer({
         container: document.getElementById('dplayer'),
         screenshot: true,
         video: {
-            url: this.url,
+            url: this.urls[this.current],
             type: 'customHls',
             customType: {
               customHls: function (video) {
@@ -34,15 +39,22 @@ export default {
               },
           },
         },
-    });
-    this.dp.fullScreen.request('browser');
-    this.dp.on('ended', this.ended);
-    this.dp.on('abort', this.ended);
-    this.dp.on('error', this.ended);
+      });
+      this.dp.fullScreen.request('browser');
+      this.dp.on('ended', this.nextPlay);
+      this.dp.on('abort', this.ended);
+      this.dp.on('error', this.ended);
 
-    this.dp.play();
-  },
-  methods: {
+      this.dp.play();
+    },
+    nextPlay() {
+      this.current++;
+      if (this.urls.length > this.current) {
+        this.play();
+      } else {
+        this.ended();
+      }
+    },
     back() {
       this.$router.back()
     },
