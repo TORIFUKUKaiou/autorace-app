@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <video id="video" controls autoplay></video>
+      <div id="dplayer"></div>
       <button @click="this.back">back</button>
     </div>
   </div>
@@ -9,37 +9,46 @@
 
 <script>
 import Hls from "hls.js";
+import DPlayer from "dplayer";
 export default {
   props: {
     url: String
   },
   data: () => {
     return {
-      hls: new Hls(),
+      dp: null,
     };
   },
   mounted: function() {
-    this.videoPlay()
+    this.dp = new DPlayer({
+        container: document.getElementById('dplayer'),
+        screenshot: true,
+        video: {
+            url: this.url,
+            type: 'customHls',
+            customType: {
+              customHls: function (video) {
+                  const hls = new Hls();
+                  hls.loadSource(video.src);
+                  hls.attachMedia(video);
+              },
+          },
+        },
+    });
+    this.dp.fullScreen.request('browser');
+    this.dp.on('ended', this.ended);
+    this.dp.on('abort', this.ended);
+    this.dp.on('error', this.ended);
+
+    this.dp.play();
   },
   methods: {
-    videoPlay() {
-      const video = document.getElementById("video");
-      const videoUrl = this.url;
-      if (Hls.isSupported()) {
-        this.hls = new Hls();
-        this.hls.loadSource(videoUrl);
-        this.hls.attachMedia(video);
-        video.play();
-      } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
-        video.src = videoUrl;
-        video.addEventListener("canplay", () => {
-          video.play();
-        });
-      }
-    },
     back() {
       this.$router.back()
-    }
-  },
-};
+    },
+    ended() {
+      this.back();
+    },
+  }
+}
 </script>
