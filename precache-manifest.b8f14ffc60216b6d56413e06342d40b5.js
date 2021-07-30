@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "609ec52f702fb97cb687",
+    "revision": "4e2b7d2ca82239b8bec1",
     "url": "/autorace-app/css/chunk-vendors.699ea57e.css"
   },
   {
-    "revision": "4c08f56e5bd803808471bf9fb87846f3",
+    "revision": "432005c045e66c7f533843c0e731d38f",
     "url": "/autorace-app/index.html"
   },
   {
-    "revision": "c13bdb426b1df89f7ea5",
-    "url": "/autorace-app/js/about.fb18f5dd.js"
+    "revision": "788cc489387f32b60c59",
+    "url": "/autorace-app/js/about.9e7f021b.js"
   },
   {
-    "revision": "562969ce9cdb97f8d8e6",
-    "url": "/autorace-app/js/app.696ed4ce.js"
+    "revision": "6b417a83c5d7d663cf1b",
+    "url": "/autorace-app/js/app.04255d1e.js"
   },
   {
-    "revision": "609ec52f702fb97cb687",
-    "url": "/autorace-app/js/chunk-vendors.9a779e9a.js"
+    "revision": "4e2b7d2ca82239b8bec1",
+    "url": "/autorace-app/js/chunk-vendors.625266ca.js"
   },
   {
     "revision": "bd70ce27f93e77ef9251fc621af48c4b",
